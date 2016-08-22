@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <definition name="common" template="/WEB-INF/layout/classic.jsp">
+    <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+  </definition>
+  
+  <definition name="index" extends="common" >
+    <put-attribute name="title" value="airSponge" />
+    <put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+  </definition>
+  
+    <definition name="users" extends="common" >
+    <put-attribute name="title" value="airSponge users" />
+    <put-attribute name="body" value="/WEB-INF/jsp/users.jsp" />
+  </definition>
+  
+  <definition name="requests" extends="common" >
+    <put-attribute name="title" value="airSponge requests" />
+    <put-attribute name="body" value="/WEB-INF/jsp/requests.jsp" />
+  </definition>
+  
+   <definition name="adminProfile" extends="common" >
+    <put-attribute name="title" value="user details" />
+    <put-attribute name="body" value="/WEB-INF/jsp/profiles/adminProfile.jsp" />
+  </definition>
+  
+  <definition name="washerProfile" extends="common" >
+    <put-attribute name="title" value="user details" />
+    <put-attribute name="body" value="/WEB-INF/jsp/profiles/washerProfile.jsp" />
+  </definition>
+  
+  <definition name="washeeProfile" extends="common" >
+    <put-attribute name="title" value="user details" />
+    <put-attribute name="body" value="/WEB-INF/jsp/profiles/washeeProfile.jsp" />
+  </definition>
+  
+  <definition name="washer-register" extends="common" >
+    <put-attribute name="title" value="user registration" />
+    <put-attribute name="body" value="/WEB-INF/jsp/registration/washer-register.jsp" />
+  </definition>
+  
+    <definition name="washee-register" extends="common" >
+    <put-attribute name="title" value="user registration" />
+    <put-attribute name="body" value="/WEB-INF/jsp/registration/washee-register.jsp" />
+  </definition>
+
+    <definition name="loginpage" extends="common" >
+    <put-attribute name="title" value="login" />
+    <put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
+  </definition>
+  
+  <definition name="washeeDashboard" extends="common" >
+    <put-attribute name="title" value="washee dashboard" />
+    <put-attribute name="body" value="/WEB-INF/jsp/dashboards/washeeDashboard.jsp" />
+  </definition>
+  
+  <definition name="washerDashboard" extends="common" >
+    <put-attribute name="title" value="washer dashboard" />
+    <put-attribute name="body" value="/WEB-INF/jsp/dashboards/washerDashboard.jsp" />
+  </definition>
+  
+  <definition name="washRequest" extends="common" >
+    <put-attribute name="title" value="wash request" />
+    <put-attribute name="body" value="/WEB-INF/jsp/requests/washRequest.jsp" />
+  </definition>
+  
+  <definition name="error" extends="common" >
+    <put-attribute name="title" value="error" />
+    <put-attribute name="body" value="/WEB-INF/jsp/error.jsp" />
+  </definition>
+  
+  <definition name="accessdenied" extends="common" >
+    <put-attribute name="title" value="access denied" />
+    <put-attribute name="body" value="/WEB-INF/jsp/accessdenied.jsp" />
+  </definition>
+
+
+  <definition name="changePassword" extends="common" >
+    <put-attribute name="title" value="password change" />
+    <put-attribute name="body" value="/WEB-INF/jsp/changepassword.jsp" />
+  </definition>
+  
+</tiles-definitions>

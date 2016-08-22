@@ -1,0 +1,359 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema airSponge
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema airSponge
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `airSponge` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `airSponge` ;
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`address`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`address` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `address_line1` VARCHAR(255) NULL COMMENT '',
+  `postcode` VARCHAR(255) NULL COMMENT '',
+  `suburb` VARCHAR(255) NULL COMMENT '',
+  `city` VARCHAR(255) NULL COMMENT '',
+  `state` VARCHAR(255) NULL COMMENT '',
+  `country` VARCHAR(255) NULL COMMENT '',
+  `longitude` DOUBLE NULL COMMENT '',
+  `latitude` DOUBLE NULL COMMENT '',
+  `formatted_address` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`role` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(85) NULL COMMENT '',
+  `urlname` VARCHAR(105) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`refree`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`refree` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(45) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`bank_account`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`bank_account` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `account_number` VARCHAR(255) NULL COMMENT '',
+  `bsb` VARCHAR(255) NULL COMMENT '',
+  `bank_name` VARCHAR(255) NULL COMMENT '',
+  `account_holder` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `email` VARCHAR(255) NULL COMMENT '',
+  `firstName` VARCHAR(255) NULL COMMENT '',
+  `lastName` VARCHAR(255) NULL COMMENT '',
+  `phone` VARCHAR(255) NULL COMMENT '',
+  `password` VARCHAR(255) NULL COMMENT '',
+  `date_registered` DATE NULL COMMENT '',
+  `Address_id` INT NOT NULL COMMENT '',
+  `role_id` INT NOT NULL COMMENT '',
+  `refree_id` INT NULL COMMENT '',
+  `bank_account_id` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)  COMMENT '',
+  INDEX `fk_user_Address1_idx` (`Address_id` ASC)  COMMENT '',
+  INDEX `fk_user_role1_idx` (`role_id` ASC)  COMMENT '',
+  INDEX `fk_user_refree1_idx` (`refree_id` ASC)  COMMENT '',
+  INDEX `fk_user_bank_account1_idx` (`bank_account_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_user_Address1`
+    FOREIGN KEY (`Address_id`)
+    REFERENCES `airSponge`.`address` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `airSponge`.`role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_refree1`
+    FOREIGN KEY (`refree_id`)
+    REFERENCES `airSponge`.`refree` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_bank_account1`
+    FOREIGN KEY (`bank_account_id`)
+    REFERENCES `airSponge`.`bank_account` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`washee`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`washee` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `user_id` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_washee_user1_idx` (`user_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_washee_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `airSponge`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`washer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`washer` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `user_id` INT NOT NULL COMMENT '',
+  `travel_distance` INT NULL COMMENT '',
+  `has_vacuum` TINYINT(1) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_washer_user1_idx` (`user_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_washer_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `airSponge`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`discount`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`discount` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(45) NULL COMMENT '',
+  `value` DOUBLE NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`water_source`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`water_source` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`electricity`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`electricity` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`vacuum`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`vacuum` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`wash_request`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`wash_request` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `washee_id` INT NOT NULL COMMENT '',
+  `water_source_id` INT NOT NULL COMMENT '',
+  `discount_id` INT NULL COMMENT '',
+  `number_of_cars` INT NULL COMMENT '',
+  `total_price` DOUBLE NULL COMMENT '',
+  `description` VARCHAR(255) NULL COMMENT '',
+  `request_date` DATETIME(2) NULL COMMENT '',
+  `total_price_after_discount` DOUBLE NULL COMMENT '',
+  `wash_date` DATETIME(2) NULL COMMENT '',
+  `electricity_id` INT NULL COMMENT '',
+  `vacuum_id` INT NULL COMMENT '',
+  `address_id` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_washRequest_washee1_idx` (`washee_id` ASC)  COMMENT '',
+  INDEX `fk_washRequest_discount1_idx` (`discount_id` ASC)  COMMENT '',
+  INDEX `fk_washRequest_water_source1_idx` (`water_source_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_electricity1_idx` (`electricity_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_vacuum1_idx` (`vacuum_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_address1_idx` (`address_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_washRequest_washee1`
+    FOREIGN KEY (`washee_id`)
+    REFERENCES `airSponge`.`washee` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_washRequest_discount1`
+    FOREIGN KEY (`discount_id`)
+    REFERENCES `airSponge`.`discount` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_washRequest_water_source1`
+    FOREIGN KEY (`water_source_id`)
+    REFERENCES `airSponge`.`water_source` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_electricity1`
+    FOREIGN KEY (`electricity_id`)
+    REFERENCES `airSponge`.`electricity` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_vacuum1`
+    FOREIGN KEY (`vacuum_id`)
+    REFERENCES `airSponge`.`vacuum` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_address1`
+    FOREIGN KEY (`address_id`)
+    REFERENCES `airSponge`.`address` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`wash_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`wash_status` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `status` VARCHAR(250) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`car_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`car_type` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `car_type` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`document_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`document_type` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `doc_type` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`document`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`document` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `user_id` INT NOT NULL COMMENT '',
+  `document_type_id` INT NOT NULL COMMENT '',
+  `date_uploaded` DATETIME NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_Document_user1_idx` (`user_id` ASC)  COMMENT '',
+  INDEX `fk_Document_document_type1_idx` (`document_type_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_Document_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `airSponge`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Document_document_type1`
+    FOREIGN KEY (`document_type_id`)
+    REFERENCES `airSponge`.`document_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`wash_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`wash_type` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `Wash_type` VARCHAR(225) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `airSponge`.`wash_request_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `airSponge`.`wash_request_item` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `washRequest_id` INT NOT NULL COMMENT '',
+  `washer_id` INT NULL COMMENT '',
+  `wash_status_id` INT NOT NULL COMMENT '',
+  `car_type_id` INT NOT NULL COMMENT '',
+  `wash_type_id` INT NOT NULL COMMENT '',
+  `request_date` DATETIME(2) NULL COMMENT '',
+  `wash_date` DATETIME(2) NULL COMMENT '',
+  `price` DOUBLE NULL COMMENT '',
+  `car_description` VARCHAR(255) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_wash_request_items_washRequest1_idx` (`washRequest_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_items_washer1_idx` (`washer_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_items_wash_status1_idx` (`wash_status_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_items_car_type1_idx` (`car_type_id` ASC)  COMMENT '',
+  INDEX `fk_wash_request_items_Wash_type1_idx` (`wash_type_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_wash_request_items_washRequest1`
+    FOREIGN KEY (`washRequest_id`)
+    REFERENCES `airSponge`.`wash_request` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_items_washer1`
+    FOREIGN KEY (`washer_id`)
+    REFERENCES `airSponge`.`washer` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_items_wash_status1`
+    FOREIGN KEY (`wash_status_id`)
+    REFERENCES `airSponge`.`wash_status` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_items_car_type1`
+    FOREIGN KEY (`car_type_id`)
+    REFERENCES `airSponge`.`car_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_wash_request_items_Wash_type1`
+    FOREIGN KEY (`wash_type_id`)
+    REFERENCES `airSponge`.`wash_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

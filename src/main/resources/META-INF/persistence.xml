@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="airsponge-java-application">
+		<class>airsponge.com.au.entity.Address</class>
+		<class>airsponge.com.au.entity.BankAccount</class>
+		<class>airsponge.com.au.entity.CarType</class>
+		<class>airsponge.com.au.entity.Discount</class>
+		<class>airsponge.com.au.entity.Document</class>
+		<class>airsponge.com.au.entity.DocumentType</class>
+		<class>airsponge.com.au.entity.Electricity</class>
+		<class>airsponge.com.au.entity.Refree</class>
+		<class>airsponge.com.au.entity.Role</class>
+		<class>airsponge.com.au.entity.User</class>
+		<class>airsponge.com.au.entity.Vacuum</class>
+		<class>airsponge.com.au.entity.WashRequest</class>
+		<class>airsponge.com.au.entity.WashRequestItem</class>
+		<class>airsponge.com.au.entity.WashStatus</class>
+		<class>airsponge.com.au.entity.WashType</class>
+		<class>airsponge.com.au.entity.Washee</class>
+		<class>airsponge.com.au.entity.Washer</class>
+		<class>airsponge.com.au.entity.WaterSource</class>
+	</persistence-unit>
+</persistence>
